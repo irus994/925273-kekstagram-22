@@ -8,20 +8,18 @@ const randomNumber = function (min, max) {
   //и округляем все в меньшую сторону
 }
 
-// randomNumber(50, 160);
+randomNumber(50, 160);
 
-console.log(randomNumber(50, 160));
+// console.log(randomNumber(50, 160));
 
 
 // Функция для проверки максимальной длины строки
 
 const lineLength = function (comment, maxLength) {
-  if (comment.length <= maxLength) {
-    return true;
-  } else {
-    return false;
-  }
+  return comment.length <= maxLength;
 }
 
-console.log(lineLength('строка', 140));
+lineLength('строка', 140)
+
+// console.log(lineLength('строка', 140));
 
