@@ -25,10 +25,11 @@ const randomId = function () {
 
 
 //   url, строка — адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
-const randomUrl = function () {
-  return 'photos/'+ randomId();
+const imageUrl = function (imageNumber) {
+  return 'photos/'+ imageNumber;
 }
-// console.log(randomUrl());
+imageUrl(3);
+// console.log(imageNumber(3));
 
 
 //   description, строка — описание фотографии. Описание придумайте самостоятельно.
@@ -86,9 +87,10 @@ const createComments = function () {
 
 // Генерация отдельного объекта
 const createImage = function () {
+  let idNumber = randomId();
   return {
-    id: randomId(),
-    url: randomUrl(),
+    id: idNumber,
+    url: imageUrl(idNumber),
     description: description,
     likes: randomLike(),
     comments: createComments(),
@@ -112,4 +114,7 @@ const createImages = function () {
   return Imageslist;
 }
 createImages();
-// console.log(createImages());
+console.log(createImages());
+
+
+
