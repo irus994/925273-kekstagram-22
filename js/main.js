@@ -114,7 +114,7 @@ const createImages = function () {
   return Imageslist;
 }
 createImages();
-console.log(createImages());
+// console.log(createImages());
 
 
 
