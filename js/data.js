@@ -9,7 +9,7 @@ const randomId = function () {
 
 //   url, строка — адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
 const imageUrl = function (imageNumber) {
-  return 'photos/'+ imageNumber;
+  return 'photos/'+ imageNumber + '.jpg';
 }
 imageUrl(3);
 // console.log(imageNumber(3));
@@ -56,12 +56,12 @@ const randomName = function () {
 
 
 const createComments = function () {
-  return {
+  return [ {
     id: randomId(),
     avatar: randomАvatar().toString(),
     message: randomMessage().toString(),
     name: randomName().toString(),
-  };
+  } ];
 }
 // console.log(createComments());
 
@@ -95,6 +95,7 @@ const createImages = function () {
   return Imageslist;
 }
 createImages();
+export {createImages};
 // console.log(createImages());
 
 
