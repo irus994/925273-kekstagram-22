@@ -90,7 +90,7 @@ window.noUiSlider.create(slider, {
 slider.noUiSlider.on('update', (_, handle, unencoded) => {
   sliderInput.value = unencoded[handle];
   const effects = document.querySelector('.effects__radio:checked');
-  console.log(effects.value);
+  // console.log(effects.value);
   const switchEffects = function (effect) {
     switch (effect) {
       case 'none':
@@ -114,7 +114,7 @@ slider.noUiSlider.on('update', (_, handle, unencoded) => {
     }
   };
   switchEffects(effects.value);
-  console.log(switchEffects(effects.value))
+  // console.log(switchEffects(effects.value))
 });
 
 
@@ -142,24 +142,24 @@ effectOrigin.addEventListener('click', function () {
 effectSepia.addEventListener('click', function () {
   slider.noUiSlider.set(100);
   imgPhoto.style.filter = 'sepia( ' +  sliderInput.value / 100 + ')';
-  console.log(imgPhoto.style.filter);
+  // console.log(imgPhoto.style.filter);
 })
 
 effectMarvin.addEventListener('click', function () {
   slider.noUiSlider.set(100)
   imgPhoto.style.filter = 'invert( ' + Math.round(sliderInput.value) + '%)';
-  console.log(imgPhoto.style.filter);
+  // console.log(imgPhoto.style.filter);
 })
 
 effectPhobos.addEventListener('click', function () {
   slider.noUiSlider.set(100)
   imgPhoto.style.filter = 'blur( ' +  Math.round(sliderInput.value / 3.3) / 10 + 'px)';
-  console.log(imgPhoto.style.filter);
+  // console.log(imgPhoto.style.filter);
 })
 
 effectHeat.addEventListener('click', function () {
   slider.noUiSlider.set(100)
   imgPhoto.style.filter = 'brightness( ' +  Math.round(sliderInput.value / 3.3) / 10 + ')';
-  console.log(imgPhoto.style.filter);
+  // console.log(imgPhoto.style.filter);
 })
 
