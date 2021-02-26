@@ -13,4 +13,5 @@ export {randomNumber};
 const lineLength = function (comment, maxLength) {
   return comment.length <= maxLength;
 }
-lineLength('строка', 140)
+lineLength('строка', 140);
+
