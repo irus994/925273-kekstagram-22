@@ -25,7 +25,7 @@ closeFormButton.addEventListener('click', function () {
 
 
 document.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 27 && !((commentTextInput === document.activeElement) || (hashtagsInput === document.activeElement))) {
+  if (evt.keyCode === 27 && commentTextInput !== document.activeElement && hashtagsInput !== document.activeElement) {
     editFormImg.classList.add('hidden');
     body.classList.remove('modal-open');
   }
