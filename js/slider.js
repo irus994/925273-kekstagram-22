@@ -1,3 +1,5 @@
+import {commentTextInput} from './validation.js'
+import {hashtagsInput} from './validation.js'
 
 //Найдем поле для загрузки изображения
 const imgUploadInput = document.querySelector('#upload-file');
@@ -21,8 +23,9 @@ closeFormButton.addEventListener('click', function () {
   imgUploadInput.value = '';
 });
 
+
 document.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 27) {
+  if (evt.keyCode === 27 && commentTextInput !== document.activeElement && hashtagsInput !== document.activeElement) {
     editFormImg.classList.add('hidden');
     body.classList.remove('modal-open');
   }
