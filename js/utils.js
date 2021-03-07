@@ -15,3 +15,30 @@ const lineLength = function (comment, maxLength) {
 }
 lineLength('строка', 140);
 
+
+
+const alertShowTime = 5000;
+
+const showAlert = (massege) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.top = 0;
+  alertContainer.style.width = '500px';
+  alertContainer.style.height = '50px';
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '20px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+
+  alertContainer.textContent = massege;
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, alertShowTime)
+
+};
+
+export {showAlert};
+

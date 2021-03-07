@@ -96,4 +96,4 @@ const createImages = function () {
 }
 createImages();
 export {createImages};
-// console.log(createImages());
+
