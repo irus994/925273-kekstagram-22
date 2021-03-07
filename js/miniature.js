@@ -9,18 +9,24 @@ let userPhotoContainer = document.querySelector('.pictures');
 // console.log(userPhotoContainer);
 
 //Список фото пользователей = массиву случайно сгенирированных объектов - функции которую экспортировали
-const userPhotos = createImages();
+// const userPhotos = createImages(); // работающий код до подключения данных с сервера
 // console.log(userPhotos)
 
-const userPhotosFragment = document.createDocumentFragment();
+// новый код
+const renderUserPhoto = function (userPhotos) {
 
-userPhotos.forEach(({url, likes, comments}) => {
-  const userPhoto = templatePicture.cloneNode(true);
+  const userPhotosFragment = document.createDocumentFragment();
 
-  userPhoto.querySelector('.picture__img').src = url;
-  userPhoto.querySelector('.picture__likes').textContent = likes;
-  userPhoto.querySelector('.picture__comments').textContent = comments.length;
-  userPhotosFragment.appendChild(userPhoto);
-});
+  userPhotos.forEach(({url, likes, comments}) => {
+    const userPhoto = templatePicture.cloneNode(true);
 
-userPhotoContainer.appendChild(userPhotosFragment);
+    userPhoto.querySelector('.picture__img').src = url;
+    userPhoto.querySelector('.picture__likes').textContent = likes;
+    userPhoto.querySelector('.picture__comments').textContent = comments.length;
+    userPhotosFragment.appendChild(userPhoto);
+  });
+
+  userPhotoContainer.appendChild(userPhotosFragment);
+};
+
+export {renderUserPhoto};

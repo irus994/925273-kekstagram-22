@@ -16,20 +16,29 @@ imgUploadInput.addEventListener('input', function () {
   body.classList.add('modal-open');
 });
 
-//Закрытие формы редактирования нажатием на крестик
-closeFormButton.addEventListener('click', function () {
+//Универсальная функция закрытия формы
+const closeForm = function () {
   editFormImg.classList.add('hidden');
   body.classList.remove('modal-open');
   imgUploadInput.value = '';
+}
+
+export {closeForm}
+
+//Закрытие формы редактирования нажатием на крестик
+closeFormButton.addEventListener('click', function () {
+  closeForm()
 });
 
-
+//Закрытие формы редактирования нажатием на esc
 document.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 27 && commentTextInput !== document.activeElement && hashtagsInput !== document.activeElement) {
-    editFormImg.classList.add('hidden');
-    body.classList.remove('modal-open');
+    closeForm()
   }
 });
+
+
+
 
 // 2) Редактирование изображения
 
