@@ -1,7 +1,7 @@
 /*global _*/
 
 import {renderUserPhoto} from './miniature.js';
-import {showAlert} from './utils.js';
+import {showAlert, alertMassege} from './utils.js';
 import {getData} from './server-exchange.js'
 
 //находим кнопки фильтров
@@ -32,11 +32,11 @@ filterRandom.addEventListener('click', _.debounce(function () {
       if (response.ok) {
         return response.json()
       } else {
-        showAlert('Ошибка, попробуйте еще раз');
+        showAlert(alertMassege);
       }
     })
     .catch(() => {
-      showAlert('Ошибка, попробуйте еще раз');
+      showAlert(alertMassege);
     })
     .then((userPhotos) => {
       renderUserPhoto(shuffle(userPhotos).slice(0, 10));
@@ -58,11 +58,11 @@ filterDiscussed.addEventListener('click', _.debounce(function () {
       if (response.ok) {
         return response.json()
       } else {
-        showAlert('Ошибка, попробуйте еще раз');
+        showAlert(alertMassege);
       }
     })
     .catch(() => {
-      showAlert('Ошибка, попробуйте еще раз');
+      showAlert(alertMassege);
     })
     .then((userPhotos) => {
       renderUserPhoto(userPhotos.slice().sort(sortComments));

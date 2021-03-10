@@ -1,7 +1,7 @@
 import {renderUserPhoto} from './miniature.js';
 import {closeForm} from './slider.js';
 import {userFormSubmit} from './user-form.js';
-import {showAlert} from './utils.js';
+import {showAlert, alertMassege} from './utils.js';
 
 const photoCount = 25;
 
@@ -11,11 +11,11 @@ const getData = (() => {
       if (response.ok) {
         return response.json()
       } else {
-        showAlert('Ошибка, попробуйте еще раз');
+        showAlert(alertMassege);
       }
     })
     .catch(() => {
-      showAlert('Ошибка, попробуйте еще раз');
+      showAlert(alertMassege);
     })
     .then((userPhotos) => {
       renderUserPhoto(userPhotos.slice(0, photoCount));

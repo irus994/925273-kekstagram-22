@@ -18,6 +18,8 @@ lineLength('строка', 140);
 
 
 const alertShowTime = 5000;
+export const alertMassege = 'Ошибка, попробуйте еще раз';
+
 
 const showAlert = (massege) => {
   const alertContainer = document.createElement('div');
