@@ -44,13 +44,14 @@ filterRandom.addEventListener('click', _.debounce(function () {
 }, RERENDER_DELAY));
 
 //фильтр - по умолчанию, сбрасывает к изначальной сортировке
-filterDefault.addEventListener('click', function () {
+filterDefault.addEventListener('click', _.debounce(function () {
   oldDataRemove();
   getData();
-})
+}, RERENDER_DELAY));
+
 
 //фильтр - сортировка по обсуждаемости
-filterDiscussed.addEventListener('click', function () {
+filterDiscussed.addEventListener('click', _.debounce(function () {
   oldDataRemove();
   fetch('https://22.javascript.pages.academy/kekstagram/data')
     .then((response) => {
@@ -66,7 +67,7 @@ filterDiscussed.addEventListener('click', function () {
     .then((userPhotos) => {
       renderUserPhoto(userPhotos.slice().sort(sortComments));
     });
-});
+}, RERENDER_DELAY));
 
 //расчет длинны коммента
 const getCommentRank = (userPhoto) => {
