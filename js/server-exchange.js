@@ -17,13 +17,14 @@ const getData = (() => {
     .catch(() => {
       showAlert('Ошибка, попробуйте еще раз');
     })
-    .then((userPhoto) => {
-      renderUserPhoto(userPhoto.slice(0, photoCount));
+    .then((userPhotos) => {
+      renderUserPhoto(userPhotos.slice(0, photoCount));
     });
-  //Сразу после загрузки изображений с сервера, открываем блок с фильтрами
-  const filterBlock = document.querySelector('.img-filters');
-  filterBlock.classList.remove('img-filters--inactive');
 });
+
+//Сразу после загрузки изображений с сервера, открываем блок с фильтрами
+const filterBlock = document.querySelector('.img-filters');
+filterBlock.classList.remove('img-filters--inactive');
 
 
 getData();
