@@ -1,4 +1,4 @@
-import {createImages} from './data.js';
+// import {createImages} from './data.js';
 
 //Находим шаблон
 let templatePicture = document.querySelector('#picture').content;
@@ -6,7 +6,7 @@ let templatePicture = document.querySelector('#picture').content;
 
 //Контейнер, куда будем добавлять изображения
 let userPhotoContainer = document.querySelector('.pictures');
-// console.log(userPhotoContainer);
+export {userPhotoContainer};
 
 //Список фото пользователей = массиву случайно сгенирированных объектов - функции которую экспортировали
 // const userPhotos = createImages(); // работающий код до подключения данных с сервера
@@ -30,3 +30,4 @@ const renderUserPhoto = function (userPhotos) {
 };
 
 export {renderUserPhoto};
+
