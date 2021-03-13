@@ -69,15 +69,10 @@ filterDiscussed.addEventListener('click', _.debounce(function () {
     });
 }, RERENDER_DELAY));
 
-//расчет длинны коммента
-const getCommentRank = (userPhoto) => {
-  return userPhoto.comments.length;
-};
-
 //функция для сортировки комментов
 const sortComments = (userPhotoA, userPhotoB) => {
-  const commentLengthA = getCommentRank(userPhotoA);
-  const commentLengthB = getCommentRank(userPhotoB);
+  const commentLengthA = userPhotoA.comments.length;
+  const commentLengthB = userPhotoB.comments.length;;
 
   return commentLengthB - commentLengthA; //сортировка от большего к меньшему
 }

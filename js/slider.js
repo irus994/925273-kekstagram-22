@@ -5,7 +5,7 @@ import {hashtagsInput} from './validation.js'
 const imgUploadInput = document.querySelector('#upload-file');
 //Найдем всплывающее окно с формой редактирования добавленного фото
 const editFormImg = document.querySelector('.img-upload__overlay');
-const body = document.querySelector('body');
+export const body = document.querySelector('body');
 const closeFormButton = document.querySelector('#upload-cancel');
 
 // 1) Загрузка изображения
@@ -22,7 +22,6 @@ const closeForm = function () {
   body.classList.remove('modal-open');
   imgUploadInput.value = '';
 }
-
 export {closeForm}
 
 //Закрытие формы редактирования нажатием на крестик
@@ -36,9 +35,6 @@ document.addEventListener('keydown', function (evt) {
     closeForm()
   }
 });
-
-
-
 
 // 2) Редактирование изображения
 
