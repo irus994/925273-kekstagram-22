@@ -1,9 +1,7 @@
 // import {createImages} from './data.js';
 import {body} from './slider.js';
-// import {commentTextInput, hashtagsInput} from './validation.js';
 
 //Находим шаблон
-
 let templatePicture = document.querySelector('#picture').content;
 // console.log(templatePicture);
 
@@ -13,7 +11,6 @@ export {userPhotoContainer};
 
 //Список фото пользователей = массиву случайно сгенирированных объектов - функции которую экспортировали
 // const userPhotos = createImages(); // работающий код до подключения данных с сервера
-// console.log(userPhotos)
 
 //удаление загруженных ранее комментариев
 const oldCommentRemove = () => {
@@ -23,7 +20,7 @@ const oldCommentRemove = () => {
   }
 }
 
-// новый код
+//Отрисовка миниатюр и полноразмерного фото
 const fullPhoto = document.querySelector('.big-picture');
 const moreCommentButton = document.querySelector('.comments-loader');
 
@@ -31,13 +28,32 @@ const renderUserPhoto = function (userPhotos) {
 
   const userPhotosFragment = document.createDocumentFragment();
 
-  userPhotos.forEach(({url, likes, comments}) => {
+  userPhotos.forEach(({url, likes, comments, description}) => {
     const userPhoto = templatePicture.cloneNode(true);
 
     const Photo = userPhoto.querySelector('.picture');
     Photo.addEventListener('click', function (evt) {
       evt.preventDefault();
       fullPhoto.classList.remove('hidden');
+      body.classList.add('modal-open');
+
+      //вывод полноразмеоного фото
+      const userFullPhotoBlock = document.querySelector('.big-picture');
+      const userFullPhoto = userFullPhotoBlock.querySelector('img');
+      userFullPhoto.src = url;
+
+      //вывод количества лайков к полноразмерному фото
+      const userFullPhotoLike = userFullPhotoBlock.querySelector('.likes-count');
+      userFullPhotoLike.textContent = likes;
+
+      //вывод количества комментариев к полноразмерному фото
+      const userFullPhotoComments = userFullPhotoBlock.querySelector('.comments-count');
+      userFullPhotoComments.textContent = comments.length;
+
+      //вывод описания полноразмерного фото
+      const userPhotoDescription = userFullPhotoBlock.querySelector('.social__caption');
+      userPhotoDescription.textContent = description;
+
       oldCommentRemove()
 
       if (comments.length <= 5) {
@@ -47,7 +63,6 @@ const renderUserPhoto = function (userPhotos) {
       }
 
       for (let i = 0; i < comments.length; i++) {
-
         const userCommentsBlock = document.querySelector('.social__comments');
         const userComment = document.createElement('li');
         const userCommentText = document.createElement('p');
@@ -80,7 +95,7 @@ const renderUserPhoto = function (userPhotos) {
 
 export {renderUserPhoto};
 
-
+//Закрытие полноразмерного фото
 const buttonCloseFullPhoto = document.querySelector('.big-picture__cancel')
 
 const closeFullPhoto = function () {
@@ -100,22 +115,28 @@ document.addEventListener('keydown', function (evt) {
 
 closeFullPhoto();
 
+//кнопка "Загрузить еще", подгружающая по 5 новых комментов
 moreCommentButton.addEventListener('click', function () {
-
-  const hiddenComments = document.querySelectorAll('.social__comment.hidden')
-
-  if (hiddenComments.length <= 5) {
+  const allHiddenComments = document.querySelectorAll('.social__comment.hidden');
+  const hiddenComments = Array.prototype.slice.call(document.querySelectorAll('.social__comment.hidden'), 0, 5);
+  if (allHiddenComments.length <= 5) {
     moreCommentButton.classList.add('hidden')
-    for (let i = 0; i < hiddenComments.length; i++) {
-      const hiddenComment = hiddenComments[i];
-      hiddenComment.classList.remove('hidden');
-    }
-  } else {
-    for (let i = 0; i <= 5; i++) {
-      const hiddenComment = hiddenComments[i];
-      hiddenComment.classList.remove('hidden');
-    }
+  }
+  for (let i = 0; i < hiddenComments.length; i++) {
+    const hiddenComment = hiddenComments[i];
+    hiddenComment.classList.remove('hidden');
   }
 });
 
+//добавление лайка при нажатии на кнопку
+const likeButton = document.querySelector('.likes-count')
 
+likeButton.addEventListener('click', function () {
+  if (likeButton.classList.contains('.like-pressed')) {
+    likeButton.textContent = Number(likeButton.textContent) - 1;
+    likeButton.classList.remove('.like-pressed');
+  } else {
+    likeButton.textContent = Number(likeButton.textContent) + 1;
+    likeButton.classList.add('.like-pressed');
+  }
+})
