@@ -12,6 +12,7 @@ const closeFormButton = document.querySelector('#upload-cancel');
 
 //Открытие формы редактирование при выборе изображения
 imgUploadInput.addEventListener('input', function () {
+  effectLevelSlider.classList.add('hidden');
   editFormImg.classList.remove('hidden');
   body.classList.add('modal-open');
 });
@@ -39,14 +40,12 @@ document.addEventListener('keydown', function (evt) {
 // 2) Редактирование изображения
 
 //Найдем кнопки для изменения масштаба картинки и поле значения
-
 const imgSmallerButton = document.querySelector('.scale__control--smaller');
 const imgBiggerButton = document.querySelector('.scale__control--bigger');
 const scaleImgValue = document.querySelector('.scale__control--value');
 const imgPhoto = document.querySelector('.img-upload__img');
 
 // Реализуем функциональность кнопок изменяющих масштаб фото (уменьшмющих и увеличивающих)
-
 scaleImgValue.value = '100%'; // т.к. в ТЗ указано значение по умолчанию = 100%
 let startValue = scaleImgValue.value //берем значение из HTML разметки
 let scaleStep = 25;
@@ -79,7 +78,6 @@ imgBiggerButton.addEventListener('click', function () {
 
 
 //Слайдер
-
 const slider = document.querySelector('.effect-level__slider');
 const sliderInput = document.querySelector('.effect-level__value');
 
@@ -98,7 +96,6 @@ window.noUiSlider.create(slider, {
 slider.noUiSlider.on('update', (_, handle, unencoded) => {
   sliderInput.value = unencoded[handle];
   const effects = document.querySelector('.effects__radio:checked');
-  // console.log(effects.value);
   const switchEffects = function (effect) {
     switch (effect) {
       case 'none':
@@ -122,50 +119,53 @@ slider.noUiSlider.on('update', (_, handle, unencoded) => {
     }
   };
   switchEffects(effects.value);
-  // console.log(switchEffects(effects.value))
 });
 
 
-
 //Наложение эффектов
-const effectChrome = document.querySelector('.effects__preview--chrome');
 const effectOrigin = document.querySelector('.effects__preview--none');
+const effectChrome = document.querySelector('.effects__preview--chrome');
 const effectSepia = document.querySelector('.effects__preview--sepia');
 const effectMarvin = document.querySelector('.effects__preview--marvin');
 const effectPhobos = document.querySelector('.effects__preview--phobos');
 const effectHeat = document.querySelector('.effects__preview--heat');
 
+const effectLevelSlider = document.querySelector('.effect-level');
 
-effectChrome.addEventListener('click', function () {
-  slider.noUiSlider.set(100)
-  imgPhoto.style.filter = 'grayscale( ' +  sliderInput.value / 100 + ')';
 
-})
 
 effectOrigin.addEventListener('click', function () {
+  effectLevelSlider.classList.add('hidden');
   slider.noUiSlider.set(100);
   imgPhoto.style.filter = 'none';
 })
 
+effectChrome.addEventListener('click', function () {
+  effectLevelSlider.classList.remove('hidden');
+  slider.noUiSlider.set(100);
+  imgPhoto.style.filter = 'grayscale( ' +  sliderInput.value / 100 + ')';
+})
+
 effectSepia.addEventListener('click', function () {
+  effectLevelSlider.classList.remove('hidden');
   slider.noUiSlider.set(100);
   imgPhoto.style.filter = 'sepia( ' +  sliderInput.value / 100 + ')';
-  // console.log(imgPhoto.style.filter);
 })
 
 effectMarvin.addEventListener('click', function () {
+  effectLevelSlider.classList.remove('hidden');
   slider.noUiSlider.set(100)
   imgPhoto.style.filter = 'invert( ' + Math.round(sliderInput.value) + '%)';
-  // console.log(imgPhoto.style.filter);
 })
 
 effectPhobos.addEventListener('click', function () {
+  effectLevelSlider.classList.remove('hidden');
   slider.noUiSlider.set(100)
   imgPhoto.style.filter = 'blur( ' +  Math.round(sliderInput.value / 3.3) / 10 + 'px)';
-  // console.log(imgPhoto.style.filter);
 })
 
 effectHeat.addEventListener('click', function () {
+  effectLevelSlider.classList.remove('hidden');
   slider.noUiSlider.set(100)
   imgPhoto.style.filter = 'brightness( ' +  Math.round(sliderInput.value / 3.3) / 10 + ')';
   // console.log(imgPhoto.style.filter);
