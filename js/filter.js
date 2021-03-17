@@ -72,7 +72,7 @@ filterDiscussed.addEventListener('click', _.debounce(function () {
 //функция для сортировки комментов
 const sortComments = (userPhotoA, userPhotoB) => {
   const commentLengthA = userPhotoA.comments.length;
-  const commentLengthB = userPhotoB.comments.length;;
+  const commentLengthB = userPhotoB.comments.length;
 
   return commentLengthB - commentLengthA; //сортировка от большего к меньшему
 }
