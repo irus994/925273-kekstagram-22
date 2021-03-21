@@ -3,7 +3,7 @@ const ALERT_SHOW_TIME = 5000;
 export const alertMessage = 'Ошибка, попробуйте еще раз';
 
 // Функция возвращающая случайное число из диапазона
-const createRandomNumber = function (min, max) {
+const createRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
   //случайное число меньше единицы умножаем на возможное количество чисел в диапазоне + 1, чтобы
   //учесть отсчет идуший с 0, а не с 1. Прибавляем минимальное значение, чтобы сдвинуть диапазон к его точке отсчета

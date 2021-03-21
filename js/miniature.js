@@ -30,7 +30,7 @@ const renderUserPhoto = (userPhotos) => {
     const userPhoto = templatePicture.cloneNode(true);
 
     const Photo = userPhoto.querySelector('.picture');
-    Photo.addEventListener('click', function (evt) {
+    Photo.addEventListener('click', (evt) => {
       evt.preventDefault();
       fullPhoto.classList.remove('hidden');
       body.classList.add('modal-open');
@@ -106,14 +106,14 @@ const closeFullPhoto = () => {
 closeFullPhoto();
 
 const onFullPhotoClose = () => {
-  buttonCloseFullPhoto.addEventListener('click', function () {
+  buttonCloseFullPhoto.addEventListener('click', () => {
     closeFullPhoto();
   });
 };
 onFullPhotoClose();
 
 const onFullPhotoEscClose = () => {
-  document.addEventListener('keydown', function (evt) {
+  document.addEventListener('keydown', (evt) => {
     if (evt.keyCode === 27) {
       closeFullPhoto()
     }
@@ -122,11 +122,8 @@ const onFullPhotoEscClose = () => {
 onFullPhotoEscClose();
 
 //кнопка "Загрузить еще", подгружающая по 5 новых комментов
-
-
-
 const onButtonLoadMoreClick = () => {
-  moreCommentButton.addEventListener('click', function () {
+  moreCommentButton.addEventListener('click', () => {
     const allComments = document.querySelectorAll('.social__comment');
     const allHiddenComments = document.querySelectorAll('.social__comment.hidden');
     const hiddenComments = Array.prototype.slice.call(document.querySelectorAll('.social__comment.hidden'), 0, 5);
@@ -145,7 +142,7 @@ onButtonLoadMoreClick();
 
 //добавление лайка при нажатии на кнопку
 const onLikeButtonClick = () => {
-  likeButton.addEventListener('click', function () {
+  likeButton.addEventListener('click', () => {
     const isLikePressed = likeButton.classList.contains('.like-pressed')
     if (isLikePressed) {
       likeButton.textContent = Number(likeButton.textContent) - 1;
@@ -157,8 +154,4 @@ const onLikeButtonClick = () => {
 };
 onLikeButtonClick();
 
-
-
-// likeButton.textContent = Number(likeButton.textContent) + (isLikePressed || -1)
-// likeButton.classList.toggle('.like-pressed', isLikePressed)
 

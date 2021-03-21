@@ -25,7 +25,7 @@ const oldDataRemove = () => {
 
 //фильтр - случайные 10 фото
 const onFilterRandomClick = () => {
-  filterRandom.addEventListener('click', _.debounce(function () {
+  filterRandom.addEventListener('click', _.debounce(() => {
     oldDataRemove();
     fetch('https://22.javascript.pages.academy/kekstagram/data')
       .then((response) => {
@@ -47,7 +47,7 @@ onFilterRandomClick();
 
 //фильтр - по умолчанию, сбрасывает к изначальной сортировке
 const onFilterDefaultClick = () => {
-  filterDefault.addEventListener('click', _.debounce(function () {
+  filterDefault.addEventListener('click', _.debounce(() => {
     oldDataRemove();
     getData();
   }, RERENDER_DELAY));
@@ -56,7 +56,7 @@ onFilterDefaultClick();
 
 //фильтр - сортировка по обсуждаемости
 const onFilterDiscussedClick = () => {
-  filterDiscussed.addEventListener('click', _.debounce(function () {
+  filterDiscussed.addEventListener('click', _.debounce(() => {
     oldDataRemove();
     fetch('https://22.javascript.pages.academy/kekstagram/data')
       .then((response) => {

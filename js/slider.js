@@ -30,7 +30,7 @@ let maxScaleValue = 100;
 
 //Открытие формы редактирование при выборе изображения
 const onOpenForm = () => {
-  imgUploadInput.addEventListener('input', function () {
+  imgUploadInput.addEventListener('input', () => {
     effectLevelSlider.classList.add('hidden');
     editFormImg.classList.remove('hidden');
     body.classList.add('modal-open');
@@ -55,14 +55,14 @@ const closeForm = () => {
 export {closeForm}
 
 const onCloseFormButtonClick = () => {
-  closeFormButton.addEventListener('click', function () {
+  closeFormButton.addEventListener('click', () => {
     closeForm()
   });
 };
 onCloseFormButtonClick()
 
 const onCloseFormButtonEckClick = () => {
-  document.addEventListener('keydown', function (evt) {
+  document.addEventListener('keydown', (evt) => {
     if (evt.keyCode === 27 && commentTextInput !== document.activeElement && hashtagsInput !== document.activeElement) {
       closeForm()
     }
@@ -76,7 +76,7 @@ onCloseFormButtonEckClick();
 scaleImgValue.value = '100%'; // т.к. в ТЗ указано значение по умолчанию = 100%
 
 const onImgSmallerButtonClick = () => {
-  imgSmallerButton.addEventListener('click', function () {
+  imgSmallerButton.addEventListener('click', () => {
     if (startValue <= minScaleValue || (parseInt(startValue) - parseInt(scaleStep)) <= minScaleValue) {
       startValue = minScaleValue + '%';
       scaleImgValue.value = startValue;
@@ -91,7 +91,7 @@ const onImgSmallerButtonClick = () => {
 onImgSmallerButtonClick();
 
 const onImgBiggerButtonClick = () => {
-  imgBiggerButton.addEventListener('click', function () {
+  imgBiggerButton.addEventListener('click', () => {
     if (startValue >= maxScaleValue || (parseInt(startValue) + parseInt(scaleStep)) >= maxScaleValue) {
       startValue = maxScaleValue + '%';
       scaleImgValue.value = startValue;
@@ -151,8 +151,8 @@ slider.noUiSlider.on('update', (_, handle, unencoded) => {
 const addPhotoEffects = () => {
   effectOrigin.classList.add('effects__radio:checked');
 
-  const onEffectOriginClick = function () {
-    effectOrigin.addEventListener('click', function () {
+  const onEffectOriginClick = () => {
+    effectOrigin.addEventListener('click', () => {
       effectLevelSlider.classList.add('hidden');
       slider.noUiSlider.set(100);
       imgPhoto.style.filter = 'none';
@@ -161,7 +161,7 @@ const addPhotoEffects = () => {
   onEffectOriginClick();
 
   const onEffectChromeClick = () => {
-    effectChrome.addEventListener('click', function () {
+    effectChrome.addEventListener('click', () => {
       effectLevelSlider.classList.remove('hidden');
       slider.noUiSlider.set(100);
       imgPhoto.style.filter = 'grayscale( ' + sliderInput.value / 100 + ')';
@@ -170,7 +170,7 @@ const addPhotoEffects = () => {
   onEffectChromeClick();
 
   const onEffectSepiaClick = () => {
-    effectSepia.addEventListener('click', function () {
+    effectSepia.addEventListener('click', () => {
       effectLevelSlider.classList.remove('hidden');
       slider.noUiSlider.set(100);
       imgPhoto.style.filter = 'sepia( ' + sliderInput.value / 100 + ')';
@@ -179,7 +179,7 @@ const addPhotoEffects = () => {
   onEffectSepiaClick();
 
   const onEffectMarvinClick = () => {
-    effectMarvin.addEventListener('click', function () {
+    effectMarvin.addEventListener('click', () => {
       effectLevelSlider.classList.remove('hidden');
       slider.noUiSlider.set(100)
       imgPhoto.style.filter = 'invert( ' + Math.round(sliderInput.value) + '%)';
@@ -188,7 +188,7 @@ const addPhotoEffects = () => {
   onEffectMarvinClick();
 
   const onEffectPhobosClick = () => {
-    effectPhobos.addEventListener('click', function () {
+    effectPhobos.addEventListener('click', () => {
       effectLevelSlider.classList.remove('hidden');
       slider.noUiSlider.set(100)
       imgPhoto.style.filter = 'blur( ' + Math.round(sliderInput.value / 3.3) / 10 + 'px)';
@@ -197,7 +197,7 @@ const addPhotoEffects = () => {
   onEffectPhobosClick();
 
   const onEffectHeatClick = () => {
-    effectHeat.addEventListener('click', function () {
+    effectHeat.addEventListener('click', () => {
       effectLevelSlider.classList.remove('hidden');
       slider.noUiSlider.set(100)
       imgPhoto.style.filter = 'brightness( ' + Math.round(sliderInput.value / 3.3) / 10 + ')';

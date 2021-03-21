@@ -11,23 +11,35 @@ const renderMessageSuccess = () => {
   const messageSuccessRoot = messageSuccess.querySelector('.success');
   const messageSuccessInner = messageSuccess.querySelector('.success__inner');
 
-  messageSuccessButton.addEventListener('click', function () {
-    messageSuccessRoot.remove();
-  });
-
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 27 ) {
+  const onMessageSuccessButtonClick = () => {
+    messageSuccessButton.addEventListener('click', () => {
       messageSuccessRoot.remove();
-    }
-  });
+    });
+  };
+  onMessageSuccessButtonClick();
 
-  messageSuccessRoot.addEventListener('click', function() {
-    messageSuccessRoot.remove();
-  });
+  const onEscMessageSuccess = () => {
+    document.addEventListener('keydown', (evt) => {
+      if (evt.keyCode === 27) {
+        messageSuccessRoot.remove();
+      }
+    });
+  };
+  onEscMessageSuccess();
 
-  messageSuccessInner.addEventListener('click', function(evt) {
-    evt.stopPropagation();
-  });
+  const onMessageSuccessRoot = () => {
+    messageSuccessRoot.addEventListener('click', () => {
+      messageSuccessRoot.remove();
+    });
+  };
+  onMessageSuccessRoot();
+
+  const onMessageSuccessInner = () => {
+    messageSuccessInner.addEventListener('click', (evt) => {
+      evt.stopPropagation();
+    });
+  };
+  onMessageSuccessInner();
 
   main.appendChild(messageSuccess);
 }
@@ -42,23 +54,35 @@ const renderMessageError = () => {
 
   editFormImg.classList.add('hidden');
 
-  messageErrorButton.addEventListener('click', function () {
-    main.querySelector('.error').remove();
-  });
-
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 27 ) {
+  const onMessageErrorButtonClick = () => {
+    messageErrorButton.addEventListener('click', () => {
       main.querySelector('.error').remove();
-    }
-  });
+    });
+  };
+  onMessageErrorButtonClick();
 
-  messageErrorRoot.addEventListener('click', function() {
-    messageErrorRoot.remove();
-  });
+  const onEscMessageSuccess = () => {
+    document.addEventListener('keydown', (evt) => {
+      if (evt.keyCode === 27 ) {
+        main.querySelector('.error').remove();
+      }
+    });
+  };
+  onEscMessageSuccess();
 
-  messageErrorInner.addEventListener('click', function(evt) {
-    evt.stopPropagation();
-  });
+  const onMessageErrorRoot = () => {
+    messageErrorRoot.addEventListener('click', () => {
+      messageErrorRoot.remove();
+    });
+  };
+  onMessageErrorRoot();
+
+  const onMessageErrorInner = () => {
+    messageErrorInner.addEventListener('click', (evt) => {
+      evt.stopPropagation();
+    });
+  };
+  onMessageErrorInner();
 
   main.appendChild(messageError);
 }
