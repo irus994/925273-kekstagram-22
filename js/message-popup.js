@@ -5,7 +5,7 @@ const templateSuccessMessage = document.querySelector('#success').content;
 const templateErrorMessage = document.querySelector('#error').content;
 
 //Создание сообщения успешной отправки
-const renderMessageSuccess = function () {
+const renderMessageSuccess = () => {
   const messageSuccess = templateSuccessMessage.cloneNode(true);
   const messageSuccessButton = messageSuccess.querySelector('.success__button');
   const messageSuccessRoot = messageSuccess.querySelector('.success');
@@ -34,7 +34,7 @@ const renderMessageSuccess = function () {
 export {renderMessageSuccess};
 
 //Создание сообщения ошибки
-const renderMessageError = function () {
+const renderMessageError = () => {
   const messageError = templateErrorMessage.cloneNode(true);
   const messageErrorButton = messageError.querySelector('.error__button');
   const messageErrorRoot = messageError.querySelector('.error');

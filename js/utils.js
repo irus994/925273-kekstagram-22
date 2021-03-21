@@ -13,7 +13,7 @@ createRandomNumber(50, 160);
 export {createRandomNumber};
 
 // Функция для проверки максимальной длины строки
-const lineLengthCheck = function (comment, maxLength) {
+const lineLengthCheck = (comment, maxLength) => {
   return comment.length <= maxLength;
 }
 lineLengthCheck('строка', 140);

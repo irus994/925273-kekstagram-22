@@ -3,7 +3,7 @@ import {renderMessageError, renderMessageSuccess} from './message-popup.js'
 
 const userForm = document.querySelector('.img-upload__form');
 
-const userFormSubmit = function (onSuccess) {
+const userFormSubmit = (onSuccess) => {
 
   userForm.addEventListener('submit', (evt) => {
     evt.preventDefault();

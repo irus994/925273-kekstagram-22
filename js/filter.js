@@ -11,7 +11,7 @@ const filterDiscussed = document.querySelector('#filter-discussed');
 const RERENDER_DELAY = 500; //задержка отрисовки (устранение дребезга)
 
 //функция для рандомного перемешивания массива
-const shuffle = function (array) {
+const shuffle = (array) => {
   return array.sort(() => Math.random() - 0.5);
 }
 
@@ -24,7 +24,7 @@ const oldDataRemove = () => {
 }
 
 //фильтр - случайные 10 фото
-const onFilterRandomClick = function () {
+const onFilterRandomClick = () => {
   filterRandom.addEventListener('click', _.debounce(function () {
     oldDataRemove();
     fetch('https://22.javascript.pages.academy/kekstagram/data')
@@ -46,7 +46,7 @@ const onFilterRandomClick = function () {
 onFilterRandomClick();
 
 //фильтр - по умолчанию, сбрасывает к изначальной сортировке
-const onFilterDefaultClick = function () {
+const onFilterDefaultClick = () => {
   filterDefault.addEventListener('click', _.debounce(function () {
     oldDataRemove();
     getData();
@@ -55,7 +55,7 @@ const onFilterDefaultClick = function () {
 onFilterDefaultClick();
 
 //фильтр - сортировка по обсуждаемости
-const onFilterDiscussedClick = function () {
+const onFilterDiscussedClick = () => {
   filterDiscussed.addEventListener('click', _.debounce(function () {
     oldDataRemove();
     fetch('https://22.javascript.pages.academy/kekstagram/data')

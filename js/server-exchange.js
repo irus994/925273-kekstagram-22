@@ -23,7 +23,7 @@ const getData = (() => {
 });
 
 //Сразу после загрузки изображений с сервера, открываем блок с фильтрами
-const openFilterBlock = function () {
+const openFilterBlock = () => {
   const filterBlock = document.querySelector('.img-filters');
   filterBlock.classList.remove('img-filters--inactive');
 };

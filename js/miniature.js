@@ -13,10 +13,16 @@ const oldCommentRemove = () => {
   for (let i = 0; i < userCommentАLL.length; i++) {
     userCommentАLL[i].remove();
   }
-}
+};
+
+const renderCommentsCount = (shownCount, totalCount) => {
+  const startCommentsQuantity = document.querySelector('.social__comment-count');
+  startCommentsQuantity.innerHTML = shownCount + ' из <span class="comments-count">' + totalCount + '</span> комментариев';
+};
+
 
 //Отрисовка фото на странице
-const renderUserPhoto = function (userPhotos) {
+const renderUserPhoto = (userPhotos) => {
 
   const userPhotosFragment = document.createDocumentFragment();
 
@@ -39,8 +45,14 @@ const renderUserPhoto = function (userPhotos) {
       userFullPhotoLike.textContent = likes;
 
       //вывод количества комментариев к полноразмерному фото
-      const userFullPhotoComments = userFullPhotoBlock.querySelector('.comments-count');
-      userFullPhotoComments.textContent = comments.length;
+
+      let startQuantity
+      if (comments.length < 5) {
+        startQuantity = comments.length
+      } else {
+        startQuantity = 5;
+      }
+      renderCommentsCount(startQuantity, comments.length);
 
       //вывод описания полноразмерного фото
       const userPhotoDescription = userFullPhotoBlock.querySelector('.social__caption');
@@ -87,20 +99,20 @@ const renderUserPhoto = function (userPhotos) {
 export {renderUserPhoto};
 
 //Закрытие полноразмерного фото
-const closeFullPhoto = function () {
+const closeFullPhoto = () => {
   fullPhoto.classList.add('hidden');
   body.classList.remove('modal-open');
 }
 closeFullPhoto();
 
-const onFullPhotoClose = function () {
+const onFullPhotoClose = () => {
   buttonCloseFullPhoto.addEventListener('click', function () {
     closeFullPhoto();
   });
 };
 onFullPhotoClose();
 
-const onFullPhotoEscClose = function () {
+const onFullPhotoEscClose = () => {
   document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === 27) {
       closeFullPhoto()
@@ -111,33 +123,42 @@ onFullPhotoEscClose();
 
 //кнопка "Загрузить еще", подгружающая по 5 новых комментов
 
-const onButtonLoadMoreClick = function () {
-  const allHiddenComments = document.querySelectorAll('.social__comment.hidden');
-  const hiddenComments = Array.prototype.slice.call(document.querySelectorAll('.social__comment.hidden'), 0, 5);
 
+
+const onButtonLoadMoreClick = () => {
   moreCommentButton.addEventListener('click', function () {
+    const allComments = document.querySelectorAll('.social__comment');
+    const allHiddenComments = document.querySelectorAll('.social__comment.hidden');
+    const hiddenComments = Array.prototype.slice.call(document.querySelectorAll('.social__comment.hidden'), 0, 5);
     if (allHiddenComments.length <= 5) {
-      moreCommentButton.classList.add('hidden')
+      moreCommentButton.classList.add('hidden');
     }
     for (let i = 0; i < hiddenComments.length; i++) {
       const hiddenComment = hiddenComments[i];
       hiddenComment.classList.remove('hidden');
     }
+    renderCommentsCount(allComments.length - allHiddenComments.length + hiddenComments.length, allComments.length);
   });
 };
 onButtonLoadMoreClick();
 
 
 //добавление лайка при нажатии на кнопку
-const onLikeButtonClick = function () {
+const onLikeButtonClick = () => {
   likeButton.addEventListener('click', function () {
-    if (likeButton.classList.contains('.like-pressed')) {
+    const isLikePressed = likeButton.classList.contains('.like-pressed')
+    if (isLikePressed) {
       likeButton.textContent = Number(likeButton.textContent) - 1;
-      likeButton.classList.remove('.like-pressed');
     } else {
       likeButton.textContent = Number(likeButton.textContent) + 1;
-      likeButton.classList.add('.like-pressed');
     }
+    likeButton.classList.toggle('.like-pressed');
   });
 };
 onLikeButtonClick();
+
+
+
+// likeButton.textContent = Number(likeButton.textContent) + (isLikePressed || -1)
+// likeButton.classList.toggle('.like-pressed', isLikePressed)
+

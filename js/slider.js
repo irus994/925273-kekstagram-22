@@ -21,11 +21,15 @@ const effectLevelSlider = document.querySelector('.effect-level');
 //Слайдер
 const slider = document.querySelector('.effect-level__slider');
 const sliderInput = document.querySelector('.effect-level__value');
+let startValue = scaleImgValue.value //берем значение из HTML разметки
+let scaleStep = 25;
+let minScaleValue = 25;
+let maxScaleValue = 100;
 
 // 1) Загрузка изображения
 
 //Открытие формы редактирование при выборе изображения
-const onOpenForm = function () {
+const onOpenForm = () => {
   imgUploadInput.addEventListener('input', function () {
     effectLevelSlider.classList.add('hidden');
     editFormImg.classList.remove('hidden');
@@ -35,7 +39,7 @@ const onOpenForm = function () {
 onOpenForm();
 
 //Универсальная функция закрытия формы
-const closeForm = function () {
+const closeForm = () => {
   const effectOriginInput = document.querySelector('#effect-none');
   editFormImg.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -50,14 +54,14 @@ const closeForm = function () {
 }
 export {closeForm}
 
-const onCloseFormButtonClick = function () {
+const onCloseFormButtonClick = () => {
   closeFormButton.addEventListener('click', function () {
     closeForm()
   });
 };
 onCloseFormButtonClick()
 
-const onCloseFormButtonEckClick = function () {
+const onCloseFormButtonEckClick = () => {
   document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === 27 && commentTextInput !== document.activeElement && hashtagsInput !== document.activeElement) {
       closeForm()
@@ -70,12 +74,8 @@ onCloseFormButtonEckClick();
 
 // Реализуем функциональность кнопок изменяющих масштаб фото (уменьшмющих и увеличивающих)
 scaleImgValue.value = '100%'; // т.к. в ТЗ указано значение по умолчанию = 100%
-let startValue = scaleImgValue.value //берем значение из HTML разметки
-let scaleStep = 25;
-let minScaleValue = 25;
-let maxScaleValue = 100;
 
-const onImgSmallerButtonClick = function () {
+const onImgSmallerButtonClick = () => {
   imgSmallerButton.addEventListener('click', function () {
     if (startValue <= minScaleValue || (parseInt(startValue) - parseInt(scaleStep)) <= minScaleValue) {
       startValue = minScaleValue + '%';
@@ -90,7 +90,7 @@ const onImgSmallerButtonClick = function () {
 };
 onImgSmallerButtonClick();
 
-const onImgBiggerButtonClick = function () {
+const onImgBiggerButtonClick = () => {
   imgBiggerButton.addEventListener('click', function () {
     if (startValue >= maxScaleValue || (parseInt(startValue) + parseInt(scaleStep)) >= maxScaleValue) {
       startValue = maxScaleValue + '%';
@@ -121,7 +121,7 @@ window.noUiSlider.create(slider, {
 slider.noUiSlider.on('update', (_, handle, unencoded) => {
   sliderInput.value = unencoded[handle];
   const effects = document.querySelector('.effects__radio:checked');
-  const switchEffects = function (effect) {
+  const switchEffects = (effect) => {
     switch (effect) {
       case 'none':
         imgPhoto.style.filter = 'none';
@@ -148,7 +148,7 @@ slider.noUiSlider.on('update', (_, handle, unencoded) => {
 
 
 //Наложение эффектов
-const addPhotoEffects = function () {
+const addPhotoEffects = () => {
   effectOrigin.classList.add('effects__radio:checked');
 
   const onEffectOriginClick = function () {
@@ -160,7 +160,7 @@ const addPhotoEffects = function () {
   };
   onEffectOriginClick();
 
-  const onEffectChromeClick = function () {
+  const onEffectChromeClick = () => {
     effectChrome.addEventListener('click', function () {
       effectLevelSlider.classList.remove('hidden');
       slider.noUiSlider.set(100);
@@ -169,7 +169,7 @@ const addPhotoEffects = function () {
   }
   onEffectChromeClick();
 
-  const onEffectSepiaClick = function () {
+  const onEffectSepiaClick = () => {
     effectSepia.addEventListener('click', function () {
       effectLevelSlider.classList.remove('hidden');
       slider.noUiSlider.set(100);
@@ -178,7 +178,7 @@ const addPhotoEffects = function () {
   };
   onEffectSepiaClick();
 
-  const onEffectMarvinClick = function () {
+  const onEffectMarvinClick = () => {
     effectMarvin.addEventListener('click', function () {
       effectLevelSlider.classList.remove('hidden');
       slider.noUiSlider.set(100)
@@ -187,7 +187,7 @@ const addPhotoEffects = function () {
   };
   onEffectMarvinClick();
 
-  const onEffectPhobosClick = function () {
+  const onEffectPhobosClick = () => {
     effectPhobos.addEventListener('click', function () {
       effectLevelSlider.classList.remove('hidden');
       slider.noUiSlider.set(100)
@@ -196,7 +196,7 @@ const addPhotoEffects = function () {
   };
   onEffectPhobosClick();
 
-  const onEffectHeatClick = function () {
+  const onEffectHeatClick = () => {
     effectHeat.addEventListener('click', function () {
       effectLevelSlider.classList.remove('hidden');
       slider.noUiSlider.set(100)
