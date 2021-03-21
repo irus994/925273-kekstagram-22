@@ -1,16 +1,11 @@
-// import {createImages} from './data.js';
 import {body} from './slider.js';
 
-//Находим шаблон
-let templatePicture = document.querySelector('#picture').content;
-// console.log(templatePicture);
-
-//Контейнер, куда будем добавлять изображения
-let userPhotoContainer = document.querySelector('.pictures');
-export {userPhotoContainer};
-
-//Список фото пользователей = массиву случайно сгенирированных объектов - функции которую экспортировали
-// const userPhotos = createImages(); // работающий код до подключения данных с сервера
+const templatePicture = document.querySelector('#picture').content; //Находим шаблон
+export const userPhotoContainer = document.querySelector('.pictures'); //Контейнер, куда будем добавлять изображения
+const fullPhoto = document.querySelector('.big-picture'); //Отрисовка миниатюр и полноразмерного фото
+const moreCommentButton = document.querySelector('.comments-loader');
+const likeButton = document.querySelector('.likes-count')
+const buttonCloseFullPhoto = document.querySelector('.big-picture__cancel')
 
 //удаление загруженных ранее комментариев
 const oldCommentRemove = () => {
@@ -18,13 +13,16 @@ const oldCommentRemove = () => {
   for (let i = 0; i < userCommentАLL.length; i++) {
     userCommentАLL[i].remove();
   }
-}
+};
 
-//Отрисовка миниатюр и полноразмерного фото
-const fullPhoto = document.querySelector('.big-picture');
-const moreCommentButton = document.querySelector('.comments-loader');
+const renderCommentsCount = (shownCount, totalCount) => {
+  const startCommentsQuantity = document.querySelector('.social__comment-count');
+  startCommentsQuantity.innerHTML = shownCount + ' из <span class="comments-count">' + totalCount + '</span> комментариев';
+};
 
-const renderUserPhoto = function (userPhotos) {
+
+//Отрисовка фото на странице
+const renderUserPhoto = (userPhotos) => {
 
   const userPhotosFragment = document.createDocumentFragment();
 
@@ -47,8 +45,14 @@ const renderUserPhoto = function (userPhotos) {
       userFullPhotoLike.textContent = likes;
 
       //вывод количества комментариев к полноразмерному фото
-      const userFullPhotoComments = userFullPhotoBlock.querySelector('.comments-count');
-      userFullPhotoComments.textContent = comments.length;
+
+      let startQuantity
+      if (comments.length < 5) {
+        startQuantity = comments.length
+      } else {
+        startQuantity = 5;
+      }
+      renderCommentsCount(startQuantity, comments.length);
 
       //вывод описания полноразмерного фото
       const userPhotoDescription = userFullPhotoBlock.querySelector('.social__caption');
@@ -92,51 +96,69 @@ const renderUserPhoto = function (userPhotos) {
 
   userPhotoContainer.appendChild(userPhotosFragment);
 };
-
 export {renderUserPhoto};
 
 //Закрытие полноразмерного фото
-const buttonCloseFullPhoto = document.querySelector('.big-picture__cancel')
-
-const closeFullPhoto = function () {
+const closeFullPhoto = () => {
   fullPhoto.classList.add('hidden');
   body.classList.remove('modal-open');
 }
-
-buttonCloseFullPhoto.addEventListener('click', function () {
-  closeFullPhoto();
-})
-
-document.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 27 ) {
-    closeFullPhoto()
-  }
-});
-
 closeFullPhoto();
 
+const onFullPhotoClose = () => {
+  buttonCloseFullPhoto.addEventListener('click', function () {
+    closeFullPhoto();
+  });
+};
+onFullPhotoClose();
+
+const onFullPhotoEscClose = () => {
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 27) {
+      closeFullPhoto()
+    }
+  });
+};
+onFullPhotoEscClose();
+
 //кнопка "Загрузить еще", подгружающая по 5 новых комментов
-moreCommentButton.addEventListener('click', function () {
-  const allHiddenComments = document.querySelectorAll('.social__comment.hidden');
-  const hiddenComments = Array.prototype.slice.call(document.querySelectorAll('.social__comment.hidden'), 0, 5);
-  if (allHiddenComments.length <= 5) {
-    moreCommentButton.classList.add('hidden')
-  }
-  for (let i = 0; i < hiddenComments.length; i++) {
-    const hiddenComment = hiddenComments[i];
-    hiddenComment.classList.remove('hidden');
-  }
-});
+
+
+
+const onButtonLoadMoreClick = () => {
+  moreCommentButton.addEventListener('click', function () {
+    const allComments = document.querySelectorAll('.social__comment');
+    const allHiddenComments = document.querySelectorAll('.social__comment.hidden');
+    const hiddenComments = Array.prototype.slice.call(document.querySelectorAll('.social__comment.hidden'), 0, 5);
+    if (allHiddenComments.length <= 5) {
+      moreCommentButton.classList.add('hidden');
+    }
+    for (let i = 0; i < hiddenComments.length; i++) {
+      const hiddenComment = hiddenComments[i];
+      hiddenComment.classList.remove('hidden');
+    }
+    renderCommentsCount(allComments.length - allHiddenComments.length + hiddenComments.length, allComments.length);
+  });
+};
+onButtonLoadMoreClick();
+
 
 //добавление лайка при нажатии на кнопку
-const likeButton = document.querySelector('.likes-count')
+const onLikeButtonClick = () => {
+  likeButton.addEventListener('click', function () {
+    const isLikePressed = likeButton.classList.contains('.like-pressed')
+    if (isLikePressed) {
+      likeButton.textContent = Number(likeButton.textContent) - 1;
+    } else {
+      likeButton.textContent = Number(likeButton.textContent) + 1;
+    }
+    likeButton.classList.toggle('.like-pressed');
+  });
+};
+onLikeButtonClick();
 
-likeButton.addEventListener('click', function () {
-  if (likeButton.classList.contains('.like-pressed')) {
-    likeButton.textContent = Number(likeButton.textContent) - 1;
-    likeButton.classList.remove('.like-pressed');
-  } else {
-    likeButton.textContent = Number(likeButton.textContent) + 1;
-    likeButton.classList.add('.like-pressed');
-  }
-})
+
+
+// likeButton.textContent = Number(likeButton.textContent) + (isLikePressed || -1)
+// likeButton.classList.toggle('.like-pressed', isLikePressed)
+
