@@ -1,9 +1,9 @@
 import {renderUserPhoto} from './miniature.js';
 import {closeForm} from './slider.js';
 import {userFormSubmit} from './user-form.js';
-import {showAlert, alertMassege} from './utils.js';
+import {showAlert, alertMessage} from './utils.js';
 
-const photoCount = 25;
+const PHOTO_COUNT = 25;
 
 const getData = (() => {
   fetch('https://22.javascript.pages.academy/kekstagram/data')
@@ -11,21 +11,23 @@ const getData = (() => {
       if (response.ok) {
         return response.json()
       } else {
-        showAlert(alertMassege);
+        showAlert(alertMessage);
       }
     })
     .catch(() => {
-      showAlert(alertMassege);
+      showAlert(alertMessage);
     })
     .then((userPhotos) => {
-      renderUserPhoto(userPhotos.slice(0, photoCount));
+      renderUserPhoto(userPhotos.slice(0, PHOTO_COUNT));
     });
 });
 
 //Сразу после загрузки изображений с сервера, открываем блок с фильтрами
-const filterBlock = document.querySelector('.img-filters');
-filterBlock.classList.remove('img-filters--inactive');
-
+const openFilterBlock = function () {
+  const filterBlock = document.querySelector('.img-filters');
+  filterBlock.classList.remove('img-filters--inactive');
+};
+openFilterBlock();
 
 getData();
 export {getData};

@@ -1,13 +1,14 @@
 /*global _*/
 
 import {renderUserPhoto} from './miniature.js';
-import {showAlert, alertMassege} from './utils.js';
+import {showAlert, alertMessage} from './utils.js';
 import {getData} from './server-exchange.js'
 
 //находим кнопки фильтров
 const filterDefault = document.querySelector('#filter-default');
 const filterRandom = document.querySelector('#filter-random');
 const filterDiscussed = document.querySelector('#filter-discussed');
+const RERENDER_DELAY = 500; //задержка отрисовки (устранение дребезга)
 
 //функция для рандомного перемешивания массива
 const shuffle = function (array) {
@@ -22,52 +23,58 @@ const oldDataRemove = () => {
   }
 }
 
-const RERENDER_DELAY = 500; //задержка отрисовки (устранение дребезга)
-
 //фильтр - случайные 10 фото
-filterRandom.addEventListener('click', _.debounce(function () {
-  oldDataRemove();
-  fetch('https://22.javascript.pages.academy/kekstagram/data')
-    .then((response) => {
-      if (response.ok) {
-        return response.json()
-      } else {
-        showAlert(alertMassege);
-      }
-    })
-    .catch(() => {
-      showAlert(alertMassege);
-    })
-    .then((userPhotos) => {
-      renderUserPhoto(shuffle(userPhotos).slice(0, 10));
-    });
-}, RERENDER_DELAY));
+const onFilterRandomClick = function () {
+  filterRandom.addEventListener('click', _.debounce(function () {
+    oldDataRemove();
+    fetch('https://22.javascript.pages.academy/kekstagram/data')
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        } else {
+          showAlert(alertMessage);
+        }
+      })
+      .catch(() => {
+        showAlert(alertMessage);
+      })
+      .then((userPhotos) => {
+        renderUserPhoto(shuffle(userPhotos).slice(0, 10));
+      });
+  }, RERENDER_DELAY));
+};
+onFilterRandomClick();
 
 //фильтр - по умолчанию, сбрасывает к изначальной сортировке
-filterDefault.addEventListener('click', _.debounce(function () {
-  oldDataRemove();
-  getData();
-}, RERENDER_DELAY));
-
+const onFilterDefaultClick = function () {
+  filterDefault.addEventListener('click', _.debounce(function () {
+    oldDataRemove();
+    getData();
+  }, RERENDER_DELAY));
+};
+onFilterDefaultClick();
 
 //фильтр - сортировка по обсуждаемости
-filterDiscussed.addEventListener('click', _.debounce(function () {
-  oldDataRemove();
-  fetch('https://22.javascript.pages.academy/kekstagram/data')
-    .then((response) => {
-      if (response.ok) {
-        return response.json()
-      } else {
-        showAlert(alertMassege);
-      }
-    })
-    .catch(() => {
-      showAlert(alertMassege);
-    })
-    .then((userPhotos) => {
-      renderUserPhoto(userPhotos.slice().sort(sortComments));
-    });
-}, RERENDER_DELAY));
+const onFilterDiscussedClick = function () {
+  filterDiscussed.addEventListener('click', _.debounce(function () {
+    oldDataRemove();
+    fetch('https://22.javascript.pages.academy/kekstagram/data')
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        } else {
+          showAlert(alertMessage);
+        }
+      })
+      .catch(() => {
+        showAlert(alertMessage);
+      })
+      .then((userPhotos) => {
+        renderUserPhoto(userPhotos.slice().sort(sortComments));
+      });
+  }, RERENDER_DELAY));
+};
+onFilterDiscussedClick();
 
 //функция для сортировки комментов
 const sortComments = (userPhotoA, userPhotoB) => {

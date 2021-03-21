@@ -1,4 +1,5 @@
-import {showAlert} from './utils.js';
+import {showAlert, alertMessage} from './utils.js';
+import {renderMessageError, renderMessageSuccess} from './message-popup.js'
 
 const userForm = document.querySelector('.img-upload__form');
 
@@ -17,12 +18,15 @@ const userFormSubmit = function (onSuccess) {
       .then((response) => {
         if (response.ok) {
           onSuccess();
+          renderMessageSuccess();
         } else {
-          showAlert('Не удалось отправить форму. Попробуйте еще раз');
+          renderMessageError();
+          showAlert(alertMessage);
         }
       })
       .catch(() => {
-        showAlert('Не удалось отправить форму. Попробуйте еще раз');
+        renderMessageError();
+        showAlert(alertMessage);
       })
   });
 };

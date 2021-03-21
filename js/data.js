@@ -1,40 +1,31 @@
-import {randomNumber} from './utils.js';
+import {createRandomNumber} from './utils.js';
+
+const names = ['Петя', 'Ваня', 'Оля', 'Лена', 'Маша', 'Ира', 'Люба'];
 
 //   id, число — идентификатор описания. Это число от 1 до 25. Идентификаторы не должны повторяться.
-const randomId = function () {
-  return randomNumber(1, 25);
+const createRandomId = function () {
+  return createRandomNumber(1, 25);
 };
-// console.log(randomId());
-
 
 //   url, строка — адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
-const imageUrl = function (imageNumber) {
+const createImageUrl = function (imageNumber) {
   return 'photos/'+ imageNumber + '.jpg';
 }
-imageUrl(3);
-// console.log(imageNumber(3));
-
 
 //   description, строка — описание фотографии. Описание придумайте самостоятельно.
 const description = 'Нормальная фотография';
 
-
 //   likes, число — количество лайков, поставленных фотографии. Случайное число от 15 до 200.
-const randomLike = function () {
-  return randomNumber(15, 200);
+const createRandomLike = function () {
+  return createRandomNumber(15, 200);
 }
-// console.log(randomLike());
-
 
 //   Поле avatar — это строка, значение которой формируется по правилу img/avatar-{{случайное число от 1 до 6}}.svg. Аватарки подготовлены в директории img.
-const randomАvatar = function () {
-  return 'img/avatar-' + randomNumber(1, 6) + '.svg';
+const createRandomАvatar = function () {
+  return 'img/avatar-' + createRandomNumber(1, 6) + '.svg';
 }
-// console.log(randomАvatar());
-
 
 // comments, массив объектов — список комментариев, оставленных другими пользователями к этой фотографии. Количество комментариев к каждой фотографии вы определяете на своё усмотрение. Все комментарии генерируются случайным образом. Пример описания объекта с комментарием:
-
 const messages = ['Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -42,43 +33,34 @@ const messages = ['Всё отлично!',
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!']
 
-const randomMessage = function () {
-  return messages[randomNumber(0, messages.length - 1)];
+const createRandomMessage = function () {
+  return messages[createRandomNumber(0, messages.length - 1)];
 }
-// console.log(randomMessage());
 
-const names = ['Петя', 'Ваня', 'Оля', 'Лена', 'Маша', 'Ира', 'Люба'];
-
-const randomName = function () {
-  return names[randomNumber(0, names.length - 1)];
+const createRandomName = function () {
+  return names[createRandomNumber(0, names.length - 1)];
 }
-// console.log(randomName());
-
 
 const createComments = function () {
   return [ {
-    id: randomId(),
-    avatar: randomАvatar().toString(),
-    message: randomMessage().toString(),
-    name: randomName().toString(),
+    id: createRandomId(),
+    avatar: createRandomАvatar().toString(),
+    message: createRandomMessage().toString(),
+    name: createRandomName().toString(),
   } ];
 }
-// console.log(createComments());
-
 
 // Генерация отдельного объекта
 const createImage = function () {
-  let idNumber = randomId();
+  let idNumber = createRandomId();
   return {
     id: idNumber,
-    url: imageUrl(idNumber),
+    url: createImageUrl(idNumber),
     description: description,
-    likes: randomLike(),
+    likes: createRandomLike(),
     comments: createComments(),
   }
 }
-// console.log(createImage());
-
 
 // Создание массива из случайно генерируемых объектов, с уникальными id
 const createImages = function () {
@@ -96,4 +78,3 @@ const createImages = function () {
 }
 createImages();
 export {createImages};
-
