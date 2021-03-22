@@ -106,45 +106,49 @@ const onImgBiggerButtonClick = () => {
 onImgBiggerButtonClick();
 
 //Слайдер
-window.noUiSlider.create(slider, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 80,
-  step: 1,
-});
+const sliderEffectAdd = () => {
+  window.noUiSlider.create(slider, {
+    range: {
+      min: 0,
+      max: 100,
+    },
+    start: 80,
+    step: 1,
+  });
 
-// handle - имя продвинутого бегунка,
-// unencoded - все значения
+  // handle - имя продвинутого бегунка,
+  // unencoded - все значения
 
-slider.noUiSlider.on('update', (_, handle, unencoded) => {
-  sliderInput.value = unencoded[handle];
-  const effects = document.querySelector('.effects__radio:checked');
-  const switchEffects = (effect) => {
-    switch (effect) {
-      case 'none':
-        imgPhoto.style.filter = 'none';
-        break;
-      case 'chrome':
-        imgPhoto.style.filter = 'grayscale( ' +  sliderInput.value / 100 + ')';
-        break;
-      case 'sepia':
-        imgPhoto.style.filter = 'sepia( ' +  sliderInput.value / 100 + ')';
-        break;
-      case 'marvin':
-        imgPhoto.style.filter = 'invert( ' + Math.round(sliderInput.value) + '%)';
-        break;
-      case 'phobos':
-        imgPhoto.style.filter = 'blur( ' +  Math.round(sliderInput.value / 3.3) / 10 + 'px)';
-        break;
-      case 'heat':
-        imgPhoto.style.filter = 'brightness( ' +  Math.round(sliderInput.value / 3.3) / 10 + ')';
-        break;
-    }
-  };
-  switchEffects(effects.value);
-});
+  slider.noUiSlider.on('update', (_, handle, unencoded) => {
+    sliderInput.value = unencoded[handle];
+    const effects = document.querySelector('.effects__radio:checked');
+    const switchEffects = (effect) => {
+      switch (effect) {
+        case 'none':
+          imgPhoto.style.filter = 'none';
+          break;
+        case 'chrome':
+          imgPhoto.style.filter = 'grayscale( ' + sliderInput.value / 100 + ')';
+          break;
+        case 'sepia':
+          imgPhoto.style.filter = 'sepia( ' + sliderInput.value / 100 + ')';
+          break;
+        case 'marvin':
+          imgPhoto.style.filter = 'invert( ' + Math.round(sliderInput.value) + '%)';
+          break;
+        case 'phobos':
+          imgPhoto.style.filter = 'blur( ' + Math.round(sliderInput.value / 3.3) / 10 + 'px)';
+          break;
+        case 'heat':
+          imgPhoto.style.filter = 'brightness( ' + Math.round(sliderInput.value / 3.3) / 10 + ')';
+          break;
+      }
+    };
+    switchEffects(effects.value);
+  });
+};
+sliderEffectAdd();
+
 
 
 //Наложение эффектов
