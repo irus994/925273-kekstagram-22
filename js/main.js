@@ -6,36 +6,16 @@ import './filter.js';
 import './server-exchange.js';
 import './user-form.js';
 import './message-popup.js';
-
-import {
-  addFilterRandomHandler,
-  addFilterDefaultHandler,
-  addFilterDiscussedHandler
-} from './filter.js';
-addFilterRandomHandler();
-addFilterDefaultHandler();
-addFilterDiscussedHandler();
-
+import {addFilterRandomHandler, addFilterDefaultHandler, addFilterDiscussedHandler} from './filter.js';
 import {
   closeFullPhoto,
   addButtonLoadMoreHandler,
   addFullPhotoCloseHandler,
   addFullPhotoEscHandler,
-  addLikeHandler
+  addLikeHandler,
+  renderUserPhoto
 } from './miniature.js';
-closeFullPhoto();
-addFullPhotoCloseHandler();
-addFullPhotoEscHandler();
-addButtonLoadMoreHandler();
-addLikeHandler();
-
-import {
-  getData,
-  openFilterBlock
-} from './server-exchange.js';
-getData();
-openFilterBlock();
-
+import {PHOTO_COUNT, getGeneralData, openFilterBlock} from './server-exchange.js';
 import {
   addOpenFormHandler,
   addCloseFormButtonHandler,
@@ -43,9 +23,25 @@ import {
   addReduceButtonHandler,
   addIncreaseButtonHandler,
   addSliderEffect,
-  addPhotoEffects
+  addPhotoEffects,
+  closeForm
 } from './slider.js';
+import {onFormValidation} from './validation.js';
+import {AddCloseOnEscHandler} from './message-popup.js';
+import {userFormSubmit} from './user-form.js';
 
+addFilterRandomHandler();
+addFilterDefaultHandler();
+addFilterDiscussedHandler();
+closeFullPhoto();
+addFullPhotoCloseHandler();
+addFullPhotoEscHandler();
+addButtonLoadMoreHandler();
+addLikeHandler();
+getGeneralData().then((userPhotos) => {
+  renderUserPhoto(userPhotos.slice(0, PHOTO_COUNT));
+});
+openFilterBlock();
 addOpenFormHandler();
 addCloseFormButtonHandler();
 addCloseFormEckHandler();
@@ -53,9 +49,6 @@ addReduceButtonHandler();
 addIncreaseButtonHandler();
 addSliderEffect();
 addPhotoEffects();
-
-import {onFormValidation} from './validation.js';
 onFormValidation();
-
-import {AddCloseOnEscHandler} from './message-popup.js';
 AddCloseOnEscHandler();
+userFormSubmit(closeForm);

@@ -1,7 +1,7 @@
 /*global _*/
 
 import {renderUserPhoto} from './miniature.js';
-import {getData, getGeneralData} from './server-exchange.js'
+import {PHOTO_COUNT, getGeneralData} from './server-exchange.js'
 
 //находим кнопки фильтров
 const filterDefault = document.querySelector('#filter-default');
@@ -37,7 +37,10 @@ export const addFilterRandomHandler = () => {
 export const addFilterDefaultHandler = () => {
   filterDefault.addEventListener('click', _.debounce(() => {
     oldDataRemove();
-    getData();
+    getGeneralData()
+      .then((userPhotos) => {
+        renderUserPhoto(userPhotos.slice(0, PHOTO_COUNT));
+      });
   }, RERENDER_DELAY));
 };
 

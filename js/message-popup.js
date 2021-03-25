@@ -44,7 +44,6 @@ export const renderMessageSuccess = () => {
     });
   };
   onMessageSuccessInner();
-
   main.appendChild(messageSuccess);
 };
 
@@ -78,6 +77,5 @@ export const renderMessageError = () => {
     });
   };
   onMessageErrorInner();
-
   main.appendChild(messageError);
 }
