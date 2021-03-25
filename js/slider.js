@@ -29,17 +29,16 @@ let maxScaleValue = 100;
 // 1) Загрузка изображения
 
 //Открытие формы редактирование при выборе изображения
-const onOpenForm = () => {
+export const addOpenFormHandler = () => {
   imgUploadInput.addEventListener('input', () => {
     effectLevelSlider.classList.add('hidden');
     editFormImg.classList.remove('hidden');
     body.classList.add('modal-open');
   });
 };
-onOpenForm();
 
 //Универсальная функция закрытия формы
-const closeForm = () => {
+export const closeForm = () => {
   const effectOriginInput = document.querySelector('#effect-none');
   editFormImg.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -52,30 +51,27 @@ const closeForm = () => {
   effectOriginInput.checked = true;
   imgPhoto.style.filter = 'none';
 }
-export {closeForm}
 
-const onCloseFormButtonClick = () => {
+export const addCloseFormButtonHandler = () => {
   closeFormButton.addEventListener('click', () => {
     closeForm()
   });
 };
-onCloseFormButtonClick()
 
-const onCloseFormButtonEckClick = () => {
+export const addCloseFormEckHandler = () => {
   document.addEventListener('keydown', (evt) => {
     if (evt.keyCode === 27 && commentTextInput !== document.activeElement && hashtagsInput !== document.activeElement) {
       closeForm()
     }
   });
 }
-onCloseFormButtonEckClick();
 
 // 2) Редактирование изображения
 
 // Реализуем функциональность кнопок изменяющих масштаб фото (уменьшмющих и увеличивающих)
 scaleImgValue.value = '100%'; // т.к. в ТЗ указано значение по умолчанию = 100%
 
-const onImgSmallerButtonClick = () => {
+export const addReduceButtonHandler = () => {
   imgSmallerButton.addEventListener('click', () => {
     if (startValue <= minScaleValue || (parseInt(startValue) - parseInt(scaleStep)) <= minScaleValue) {
       startValue = minScaleValue + '%';
@@ -88,9 +84,8 @@ const onImgSmallerButtonClick = () => {
     }
   });
 };
-onImgSmallerButtonClick();
 
-const onImgBiggerButtonClick = () => {
+export const addIncreaseButtonHandler = () => {
   imgBiggerButton.addEventListener('click', () => {
     if (startValue >= maxScaleValue || (parseInt(startValue) + parseInt(scaleStep)) >= maxScaleValue) {
       startValue = maxScaleValue + '%';
@@ -103,10 +98,9 @@ const onImgBiggerButtonClick = () => {
     }
   });
 };
-onImgBiggerButtonClick();
 
 //Слайдер
-const sliderEffectAdd = () => {
+export const addSliderEffect = () => {
   window.noUiSlider.create(slider, {
     range: {
       min: 0,
@@ -147,12 +141,10 @@ const sliderEffectAdd = () => {
     switchEffects(effects.value);
   });
 };
-sliderEffectAdd();
-
 
 
 //Наложение эффектов
-const addPhotoEffects = () => {
+export const addPhotoEffects = () => {
   effectOrigin.classList.add('effects__radio:checked');
 
   const onEffectOriginClick = () => {
@@ -209,4 +201,3 @@ const addPhotoEffects = () => {
   };
   onEffectHeatClick();
 };
-addPhotoEffects();

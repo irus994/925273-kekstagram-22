@@ -4,8 +4,21 @@ const main = document.querySelector('main')
 const templateSuccessMessage = document.querySelector('#success').content;
 const templateErrorMessage = document.querySelector('#error').content;
 
-//Создание сообщения успешной отправки
-const renderMessageSuccess = () => {
+export const AddCloseOnEscHandler = () => {
+  document.addEventListener('keydown', (evt) => {
+    if (evt.keyCode === 27) {
+      const errorWindow = document.querySelector('.error');
+      const successWindow = document.querySelector('.success');
+      if (errorWindow) {
+        errorWindow.remove();
+      } else if (successWindow) {
+        successWindow.remove();
+      }
+    }
+  });
+};
+
+export const renderMessageSuccess = () => {
   const messageSuccess = templateSuccessMessage.cloneNode(true);
   const messageSuccessButton = messageSuccess.querySelector('.success__button');
   const messageSuccessRoot = messageSuccess.querySelector('.success');
@@ -17,15 +30,6 @@ const renderMessageSuccess = () => {
     });
   };
   onMessageSuccessButtonClick();
-
-  const onEscMessageSuccess = () => {
-    document.addEventListener('keydown', (evt) => {
-      if (evt.keyCode === 27) {
-        messageSuccessRoot.remove();
-      }
-    });
-  };
-  onEscMessageSuccess();
 
   const onMessageSuccessRoot = () => {
     messageSuccessRoot.addEventListener('click', () => {
@@ -42,11 +46,11 @@ const renderMessageSuccess = () => {
   onMessageSuccessInner();
 
   main.appendChild(messageSuccess);
-}
-export {renderMessageSuccess};
+};
 
-//Создание сообщения ошибки
-const renderMessageError = () => {
+//Создание сообщения ошибки отправки
+
+export const renderMessageError = () => {
   const messageError = templateErrorMessage.cloneNode(true);
   const messageErrorButton = messageError.querySelector('.error__button');
   const messageErrorRoot = messageError.querySelector('.error');
@@ -60,15 +64,6 @@ const renderMessageError = () => {
     });
   };
   onMessageErrorButtonClick();
-
-  const onEscMessageSuccess = () => {
-    document.addEventListener('keydown', (evt) => {
-      if (evt.keyCode === 27 ) {
-        main.querySelector('.error').remove();
-      }
-    });
-  };
-  onEscMessageSuccess();
 
   const onMessageErrorRoot = () => {
     messageErrorRoot.addEventListener('click', () => {
@@ -86,4 +81,3 @@ const renderMessageError = () => {
 
   main.appendChild(messageError);
 }
-export {renderMessageError};

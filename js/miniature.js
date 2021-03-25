@@ -22,7 +22,7 @@ const renderCommentsCount = (shownCount, totalCount) => {
 
 
 //Отрисовка фото на странице
-const renderUserPhoto = (userPhotos) => {
+export const renderUserPhoto = (userPhotos) => {
 
   const userPhotosFragment = document.createDocumentFragment();
 
@@ -31,61 +31,52 @@ const renderUserPhoto = (userPhotos) => {
 
     const Photo = userPhoto.querySelector('.picture');
     Photo.addEventListener('click', (evt) => {
+      const userFullPhotoBlock = document.querySelector('.big-picture');
+      const userFullPhoto = userFullPhotoBlock.querySelector('img');
+      const userFullPhotoLike = userFullPhotoBlock.querySelector('.likes-count');
+      const userPhotoDescription = userFullPhotoBlock.querySelector('.social__caption');
+      const startQuantity = comments.length < 5 ? comments.length : 5; //вывод количества комментариев к полноразмерному фото
       evt.preventDefault();
       fullPhoto.classList.remove('hidden');
       body.classList.add('modal-open');
 
       //вывод полноразмеоного фото
-      const userFullPhotoBlock = document.querySelector('.big-picture');
-      const userFullPhoto = userFullPhotoBlock.querySelector('img');
       userFullPhoto.src = url;
 
       //вывод количества лайков к полноразмерному фото
-      const userFullPhotoLike = userFullPhotoBlock.querySelector('.likes-count');
       userFullPhotoLike.textContent = likes;
 
-      //вывод количества комментариев к полноразмерному фото
-
-      let startQuantity
-      if (comments.length < 5) {
-        startQuantity = comments.length
-      } else {
-        startQuantity = 5;
-      }
       renderCommentsCount(startQuantity, comments.length);
 
       //вывод описания полноразмерного фото
-      const userPhotoDescription = userFullPhotoBlock.querySelector('.social__caption');
       userPhotoDescription.textContent = description;
 
       oldCommentRemove()
 
-      if (comments.length <= 5) {
-        moreCommentButton.classList.add('hidden');
-      } else {
-        moreCommentButton.classList.remove('hidden');
-      }
+      moreCommentButton.classList.toggle('hidden', comments.length <= 5);
 
       for (let i = 0; i < comments.length; i++) {
         const userCommentsBlock = document.querySelector('.social__comments');
         const userComment = document.createElement('li');
         const userCommentText = document.createElement('p');
         const userCommentImg = document.createElement('img');
+
+        userCommentText.classList.add('social__text');
+        userCommentText.textContent = comments[i].message;
+
+        userCommentImg.classList.add('social__picture');
+        userCommentImg.src = comments[i].avatar;
+        userCommentImg.alt = comments[i].name;
+
         userComment.classList.add('social__comment');
         if (i >= 5) {
           userComment.classList.add('hidden');
         }
-        userCommentText.classList.add('social__text');
-        userCommentImg.classList.add('social__picture');
-        userCommentText.textContent = comments[i].message;
-        userCommentImg.src = comments[i].avatar;
-        userCommentImg.alt = comments[i].name;
-
         userComment.appendChild(userCommentImg);
         userComment.appendChild(userCommentText);
         userCommentsBlock.appendChild(userComment);
       }
-    })
+    });
 
     userPhoto.querySelector('.picture__img').src = url;
     userPhoto.querySelector('.picture__likes').textContent = likes;
@@ -96,33 +87,29 @@ const renderUserPhoto = (userPhotos) => {
 
   userPhotoContainer.appendChild(userPhotosFragment);
 };
-export {renderUserPhoto};
 
 //Закрытие полноразмерного фото
-const closeFullPhoto = () => {
+export const closeFullPhoto = () => {
   fullPhoto.classList.add('hidden');
   body.classList.remove('modal-open');
 }
-closeFullPhoto();
 
-const onFullPhotoClose = () => {
+export const addFullPhotoCloseHandler = () => {
   buttonCloseFullPhoto.addEventListener('click', () => {
     closeFullPhoto();
   });
 };
-onFullPhotoClose();
 
-const onFullPhotoEscClose = () => {
+export const addFullPhotoEscHandler = () => {
   document.addEventListener('keydown', (evt) => {
     if (evt.keyCode === 27) {
       closeFullPhoto()
     }
   });
 };
-onFullPhotoEscClose();
 
 //кнопка "Загрузить еще", подгружающая по 5 новых комментов
-const onButtonLoadMoreClick = () => {
+export const addButtonLoadMoreHandler = () => {
   moreCommentButton.addEventListener('click', () => {
     const allComments = document.querySelectorAll('.social__comment');
     const allHiddenComments = document.querySelectorAll('.social__comment.hidden');
@@ -137,21 +124,14 @@ const onButtonLoadMoreClick = () => {
     renderCommentsCount(allComments.length - allHiddenComments.length + hiddenComments.length, allComments.length);
   });
 };
-onButtonLoadMoreClick();
-
 
 //добавление лайка при нажатии на кнопку
-const onLikeButtonClick = () => {
+export const addLikeHandler = () => {
   likeButton.addEventListener('click', () => {
     const isLikePressed = likeButton.classList.contains('.like-pressed')
-    if (isLikePressed) {
-      likeButton.textContent = Number(likeButton.textContent) - 1;
-    } else {
-      likeButton.textContent = Number(likeButton.textContent) + 1;
-    }
+    isLikePressed ? likeButton.textContent = Number(likeButton.textContent) - 1 : likeButton.textContent = Number(likeButton.textContent) + 1;
     likeButton.classList.toggle('.like-pressed');
   });
 };
-onLikeButtonClick();
 
 

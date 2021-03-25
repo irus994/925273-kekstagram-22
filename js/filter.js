@@ -1,8 +1,7 @@
 /*global _*/
 
 import {renderUserPhoto} from './miniature.js';
-import {showAlert, alertMessage} from './utils.js';
-import {getData} from './server-exchange.js'
+import {getData, getGeneralData} from './server-exchange.js'
 
 //находим кнопки фильтров
 const filterDefault = document.querySelector('#filter-default');
@@ -24,62 +23,35 @@ const oldDataRemove = () => {
 }
 
 //фильтр - случайные 10 фото
-const onFilterRandomClick = () => {
+export const addFilterRandomHandler = () => {
   filterRandom.addEventListener('click', _.debounce(() => {
     oldDataRemove();
-    fetch('https://22.javascript.pages.academy/kekstagram/data')
-      .then((response) => {
-        if (response.ok) {
-          return response.json()
-        } else {
-          showAlert(alertMessage);
-        }
-      })
-      .catch(() => {
-        showAlert(alertMessage);
-      })
+    getGeneralData()
       .then((userPhotos) => {
         renderUserPhoto(shuffle(userPhotos).slice(0, 10));
       });
   }, RERENDER_DELAY));
 };
-onFilterRandomClick();
 
 //фильтр - по умолчанию, сбрасывает к изначальной сортировке
-const onFilterDefaultClick = () => {
+export const addFilterDefaultHandler = () => {
   filterDefault.addEventListener('click', _.debounce(() => {
     oldDataRemove();
     getData();
   }, RERENDER_DELAY));
 };
-onFilterDefaultClick();
 
 //фильтр - сортировка по обсуждаемости
-const onFilterDiscussedClick = () => {
+export const addFilterDiscussedHandler = () => {
   filterDiscussed.addEventListener('click', _.debounce(() => {
     oldDataRemove();
-    fetch('https://22.javascript.pages.academy/kekstagram/data')
-      .then((response) => {
-        if (response.ok) {
-          return response.json()
-        } else {
-          showAlert(alertMessage);
-        }
-      })
-      .catch(() => {
-        showAlert(alertMessage);
-      })
+    getGeneralData()
       .then((userPhotos) => {
         renderUserPhoto(userPhotos.slice().sort(sortComments));
       });
   }, RERENDER_DELAY));
 };
-onFilterDiscussedClick();
 
 //функция для сортировки комментов
-const sortComments = (userPhotoA, userPhotoB) => {
-  const commentLengthA = userPhotoA.comments.length;
-  const commentLengthB = userPhotoB.comments.length;
+const sortComments = (userPhotoA, userPhotoB) => userPhotoB.comments.length - userPhotoA.comments.length; //сортировка от большего к меньшему
 
-  return commentLengthB - commentLengthA; //сортировка от большего к меньшему
-}

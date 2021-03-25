@@ -1,9 +1,9 @@
-import {showAlert, alertMessage} from './utils.js';
+import {showAlert, ALTER_MESSAGE} from './utils.js';
 import {renderMessageError, renderMessageSuccess} from './message-popup.js'
 
 const userForm = document.querySelector('.img-upload__form');
 
-const userFormSubmit = (onSuccess) => {
+export const userFormSubmit = (onSuccess) => {
 
   userForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -21,15 +21,12 @@ const userFormSubmit = (onSuccess) => {
           renderMessageSuccess();
         } else {
           renderMessageError();
-          showAlert(alertMessage);
+          showAlert(ALTER_MESSAGE);
         }
       })
       .catch(() => {
         renderMessageError();
-        showAlert(alertMessage);
+        showAlert(ALTER_MESSAGE);
       })
   });
 };
-export {userFormSubmit}
-
-

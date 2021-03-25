@@ -1,25 +1,15 @@
 
 const ALERT_SHOW_TIME = 5000;
-export const alertMessage = 'Ошибка, попробуйте еще раз';
+export const  ALTER_MESSAGE = 'Ошибка, попробуйте еще раз';
 
 // Функция возвращающая случайное число из диапазона
-const createRandomNumber = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-  //случайное число меньше единицы умножаем на возможное количество чисел в диапазоне + 1, чтобы
-  //учесть отсчет идуший с 0, а не с 1. Прибавляем минимальное значение, чтобы сдвинуть диапазон к его точке отсчета
-  //и округляем все в меньшую сторону
-}
-createRandomNumber(50, 160);
-export {createRandomNumber};
-
-// Функция для проверки максимальной длины строки
-const lineLengthCheck = (comment, maxLength) => {
-  return comment.length <= maxLength;
-}
-lineLengthCheck('строка', 140);
+//случайное число меньше единицы умножаем на возможное количество чисел в диапазоне + 1, чтобы
+//учесть отсчет идуший с 0, а не с 1. Прибавляем минимальное значение, чтобы сдвинуть диапазон к его точке отсчета
+//и округляем все в меньшую сторону
+export const createRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 //Создание всплывающего окна с сообщением об ошибке
-const showAlert = (message) => {
+export const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
   alertContainer.style.position = 'absolute';
@@ -37,7 +27,4 @@ const showAlert = (message) => {
   setTimeout(() => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME)
-
 };
-export {showAlert};
-
