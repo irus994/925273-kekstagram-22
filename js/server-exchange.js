@@ -4,11 +4,17 @@ const filterBlock = document.querySelector('.img-filters');
 
 export const PHOTO_COUNT = 25;
 
-export const getGeneralData = () =>
-  fetch('https://22.javascript.pages.academy/kekstagram/data')
+let data = null;
+
+export const getGeneralData = () => {
+  if (data) {
+    return data;
+  }
+  return fetch('https://22.javascript.pages.academy/kekstagram/data')
     .then((response) => {
       if (response.ok) {
-        return response.json()
+        data = response.json()
+        return data
       } else {
         showAlert(ALTER_MESSAGE);
       }
@@ -16,10 +22,8 @@ export const getGeneralData = () =>
     .catch(() => {
       showAlert(ALTER_MESSAGE);
     });
-
+}
 //Сразу после загрузки изображений с сервера, открываем блок с фильтрами
 export const openFilterBlock = () => {
-  //зачем ее выносить, если она используется 1 раз
-  // const filterBlock = document.querySelector('.img-filters');
   filterBlock.classList.remove('img-filters--inactive');
 };
