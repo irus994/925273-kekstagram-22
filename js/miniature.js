@@ -2,10 +2,11 @@ import {body} from './slider.js';
 
 const templatePicture = document.querySelector('#picture').content; //Находим шаблон
 export const userPhotoContainer = document.querySelector('.pictures'); //Контейнер, куда будем добавлять изображения
-const fullPhoto = document.querySelector('.big-picture'); //Отрисовка миниатюр и полноразмерного фото
+const userFullPhotoBlock= document.querySelector('.big-picture'); //Отрисовка миниатюр и полноразмерного фото
 const moreCommentButton = document.querySelector('.comments-loader');
 const likeButton = document.querySelector('.likes-count')
 const buttonCloseFullPhoto = document.querySelector('.big-picture__cancel')
+const userCommentsBlock = document.querySelector('.social__comments');
 
 //удаление загруженных ранее комментариев
 const oldCommentRemove = () => {
@@ -31,14 +32,14 @@ export const renderUserPhoto = (userPhotos) => {
 
     const Photo = userPhoto.querySelector('.picture');
     Photo.addEventListener('click', (evt) => {
-      const userFullPhotoBlock = document.querySelector('.big-picture');
       const userFullPhoto = userFullPhotoBlock.querySelector('img');
       const userFullPhotoLike = userFullPhotoBlock.querySelector('.likes-count');
       const userPhotoDescription = userFullPhotoBlock.querySelector('.social__caption');
       const startQuantity = comments.length < 5 ? comments.length : 5; //вывод количества комментариев к полноразмерному фото
       evt.preventDefault();
-      fullPhoto.classList.remove('hidden');
+      userFullPhotoBlock.classList.remove('hidden');
       body.classList.add('modal-open');
+      document.addEventListener('keydown', addEscHandler)
 
       //вывод полноразмеоного фото
       userFullPhoto.src = url;
@@ -56,7 +57,7 @@ export const renderUserPhoto = (userPhotos) => {
       moreCommentButton.classList.toggle('hidden', comments.length <= 5);
 
       for (let i = 0; i < comments.length; i++) {
-        const userCommentsBlock = document.querySelector('.social__comments');
+        // const userCommentsBlock = document.querySelector('.social__comments');
         const userComment = document.createElement('li');
         const userCommentText = document.createElement('p');
         const userCommentImg = document.createElement('img');
@@ -90,8 +91,9 @@ export const renderUserPhoto = (userPhotos) => {
 
 //Закрытие полноразмерного фото
 export const closeFullPhoto = () => {
-  fullPhoto.classList.add('hidden');
+  userFullPhotoBlock.classList.add('hidden');
   body.classList.remove('modal-open');
+  document.removeEventListener('keydown', addEscHandler)
 }
 
 export const addFullPhotoCloseHandler = () => {
@@ -100,14 +102,11 @@ export const addFullPhotoCloseHandler = () => {
   });
 };
 
-export const addFullPhotoEscHandler = () => {
-  document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === 27) {
-      closeFullPhoto()
-    }
-  });
+const addEscHandler = (evt) => {
+  if (evt.keyCode === 27) {
+    closeFullPhoto()
+  }
 };
-
 //кнопка "Загрузить еще", подгружающая по 5 новых комментов
 export const addButtonLoadMoreHandler = () => {
   moreCommentButton.addEventListener('click', () => {
@@ -133,5 +132,3 @@ export const addLikeHandler = () => {
     likeButton.classList.toggle('.like-pressed');
   });
 };
-
-

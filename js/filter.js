@@ -25,6 +25,9 @@ const oldDataRemove = () => {
 //фильтр - случайные 10 фото
 export const addFilterRandomHandler = () => {
   filterRandom.addEventListener('click', _.debounce(() => {
+    filterRandom.classList.add('img-filters__button--active');
+    filterDefault.classList.remove('img-filters__button--active');
+    filterDiscussed.classList.remove('img-filters__button--active');
     oldDataRemove();
     getGeneralData()
       .then((userPhotos) => {
@@ -36,6 +39,9 @@ export const addFilterRandomHandler = () => {
 //фильтр - по умолчанию, сбрасывает к изначальной сортировке
 export const addFilterDefaultHandler = () => {
   filterDefault.addEventListener('click', _.debounce(() => {
+    filterRandom.classList.remove('img-filters__button--active');
+    filterDefault.classList.add('img-filters__button--active');
+    filterDiscussed.classList.remove('img-filters__button--active');
     oldDataRemove();
     getGeneralData()
       .then((userPhotos) => {
@@ -47,6 +53,9 @@ export const addFilterDefaultHandler = () => {
 //фильтр - сортировка по обсуждаемости
 export const addFilterDiscussedHandler = () => {
   filterDiscussed.addEventListener('click', _.debounce(() => {
+    filterRandom.classList.remove('img-filters__button--active');
+    filterDefault.classList.remove('img-filters__button--active');
+    filterDiscussed.classList.add('img-filters__button--active');
     oldDataRemove();
     getGeneralData()
       .then((userPhotos) => {

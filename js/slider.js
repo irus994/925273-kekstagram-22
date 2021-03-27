@@ -34,6 +34,7 @@ export const addOpenFormHandler = () => {
     effectLevelSlider.classList.add('hidden');
     editFormImg.classList.remove('hidden');
     body.classList.add('modal-open');
+    document.addEventListener('keydown', addCloseEckHandler);
   });
 };
 
@@ -50,6 +51,7 @@ export const closeForm = () => {
   startValue = '100%';
   effectOriginInput.checked = true;
   imgPhoto.style.filter = 'none';
+  document.removeEventListener('keydown', addCloseEckHandler);
 }
 
 export const addCloseFormButtonHandler = () => {
@@ -58,13 +60,12 @@ export const addCloseFormButtonHandler = () => {
   });
 };
 
-export const addCloseFormEckHandler = () => {
-  document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === 27 && commentTextInput !== document.activeElement && hashtagsInput !== document.activeElement) {
-      closeForm()
-    }
-  });
+const addCloseEckHandler = (evt) => {
+  if (evt.keyCode === 27 && commentTextInput !== document.activeElement && hashtagsInput !== document.activeElement) {
+    closeForm()
+  }
 }
+
 
 // 2) Редактирование изображения
 
@@ -147,57 +148,39 @@ export const addSliderEffect = () => {
 export const addPhotoEffects = () => {
   effectOrigin.classList.add('effects__radio:checked');
 
-  const onEffectOriginClick = () => {
-    effectOrigin.addEventListener('click', () => {
-      effectLevelSlider.classList.add('hidden');
-      slider.noUiSlider.set(100);
-      imgPhoto.style.filter = 'none';
-    });
-  };
-  onEffectOriginClick();
+  effectOrigin.addEventListener('click', () => {
+    effectLevelSlider.classList.add('hidden');
+    slider.noUiSlider.set(100);
+    imgPhoto.style.filter = 'none';
+  });
 
-  const onEffectChromeClick = () => {
-    effectChrome.addEventListener('click', () => {
-      effectLevelSlider.classList.remove('hidden');
-      slider.noUiSlider.set(100);
-      imgPhoto.style.filter = 'grayscale( ' + sliderInput.value / 100 + ')';
-    });
-  }
-  onEffectChromeClick();
+  effectChrome.addEventListener('click', () => {
+    effectLevelSlider.classList.remove('hidden');
+    slider.noUiSlider.set(100);
+    imgPhoto.style.filter = 'grayscale( ' + sliderInput.value / 100 + ')';
+  });
 
-  const onEffectSepiaClick = () => {
-    effectSepia.addEventListener('click', () => {
-      effectLevelSlider.classList.remove('hidden');
-      slider.noUiSlider.set(100);
-      imgPhoto.style.filter = 'sepia( ' + sliderInput.value / 100 + ')';
-    });
-  };
-  onEffectSepiaClick();
+  effectSepia.addEventListener('click', () => {
+    effectLevelSlider.classList.remove('hidden');
+    slider.noUiSlider.set(100);
+    imgPhoto.style.filter = 'sepia( ' + sliderInput.value / 100 + ')';
+  });
 
-  const onEffectMarvinClick = () => {
-    effectMarvin.addEventListener('click', () => {
-      effectLevelSlider.classList.remove('hidden');
-      slider.noUiSlider.set(100)
-      imgPhoto.style.filter = 'invert( ' + Math.round(sliderInput.value) + '%)';
-    });
-  };
-  onEffectMarvinClick();
+  effectMarvin.addEventListener('click', () => {
+    effectLevelSlider.classList.remove('hidden');
+    slider.noUiSlider.set(100)
+    imgPhoto.style.filter = 'invert( ' + Math.round(sliderInput.value) + '%)';
+  });
 
-  const onEffectPhobosClick = () => {
-    effectPhobos.addEventListener('click', () => {
-      effectLevelSlider.classList.remove('hidden');
-      slider.noUiSlider.set(100)
-      imgPhoto.style.filter = 'blur( ' + Math.round(sliderInput.value / 3.3) / 10 + 'px)';
-    });
-  };
-  onEffectPhobosClick();
+  effectPhobos.addEventListener('click', () => {
+    effectLevelSlider.classList.remove('hidden');
+    slider.noUiSlider.set(100)
+    imgPhoto.style.filter = 'blur( ' + Math.round(sliderInput.value / 3.3) / 10 + 'px)';
+  });
 
-  const onEffectHeatClick = () => {
-    effectHeat.addEventListener('click', () => {
-      effectLevelSlider.classList.remove('hidden');
-      slider.noUiSlider.set(100)
-      imgPhoto.style.filter = 'brightness( ' + Math.round(sliderInput.value / 3.3) / 10 + ')';
-    });
-  };
-  onEffectHeatClick();
+  effectHeat.addEventListener('click', () => {
+    effectLevelSlider.classList.remove('hidden');
+    slider.noUiSlider.set(100)
+    imgPhoto.style.filter = 'brightness( ' + Math.round(sliderInput.value / 3.3) / 10 + ')';
+  });
 };
